@@ -8,6 +8,7 @@
 import { createServer } from './api/application'
 import { logger } from './infra/logger'
 import { env } from './infra/env'
+import mongoose from './infra/database/mongoose'
 
 createServer().then(
   app =>
