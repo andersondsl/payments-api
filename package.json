@@ -17,6 +17,7 @@
     "koa": "^2.8.2",
     "koa-bodyparser": "^4.2.1",
     "koa-compress": "^3.0.0",
+    "koa-router": "^7.4.0",
     "mongoose": "^5.7.3",
     "nodemon": "^1.19.3",
     "palin": "^2.3.0",

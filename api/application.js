@@ -11,6 +11,7 @@ import cors from '@koa/cors'
 import bodyParser from 'koa-bodyparser'
 import compress from 'koa-compress'
 import { logger } from '../infra/logger'
+import router from './routes'
 
 /**
  * Creates and returns a new Koa application.
@@ -25,6 +26,7 @@ export async function createServer() {
     .use(compress())
     .use(cors())
     .use(bodyParser())
+    .use(router.routes())
 
   const server = http.createServer(app.callback())
 
