@@ -8,24 +8,20 @@
 import mongoose from "mongoose";
 
 const TransactionSchema = new mongoose.Schema({
-  device_id: {
-    type: String,
-    required: true
-  },
   nsu: {
     type: String,
     required: true
   },
   grossValue: {
-    type: Number,
+    type: String,
     required: true
   },
   netValue: {
-    type: Number,
+    type: String,
     required: true
   },
   fee: {
-    type: Number,
+    type: String,
     required: true
   },
   cardBrand: {
@@ -41,7 +37,7 @@ const TransactionSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  availableData: {
+  availableDate: {
     type: Date,
     required: true
   }

@@ -6,15 +6,15 @@
  */
 
 import { transactionRepository } from "./transactionRepository";
-import moment from "moment-business-days";
+const moment = require("moment-business-days");
 
 class TransactionService {
   constructor() {
     this.transactionRepository = transactionRepository;
 
     this.fees = {
-      DEBIT: 2,
-      CREDIT: 3
+      DEBITO: 2,
+      CREDITO: 3
     };
   }
 
@@ -34,31 +34,33 @@ class TransactionService {
 
   async createTransaction({ nsu, value, cardBrand, type, createdAt }) {
     let result = {};
-
-    let fee = this.fees[type];
+    let fee = this.fees[type.toUpperCase()];
     let netValue = this._calculateFee(value, fee);
-    let availableData = this._getNextWeekDay(date);
+    let availableDate = this._getNextWeekDay(createdAt);
 
     result.data = await this.transactionRepository.createTransaction({
       nsu,
-      value,
+      grossValue: value,
       netValue,
+      fee,
       cardBrand,
       type,
       createdAt,
-      availableData
+      availableDate
     });
 
     result.status = result.data ? 200 : 500;
     return result;
   }
 
-  async _calculateFee(value, fee) {
-    return (value / 100) * fee;
+  _calculateFee(value, fee) {
+    let feeValue = (value / 100) * fee;
+    return value - feeValue;
   }
 
-  async _getNextWeekDay(date) {
-    return moment.nextBusinessDay(date);
+  _getNextWeekDay(date) {
+    let formatedDate = date.match(/\d{4}-\d{2}-\d{2}/)[0];
+    return moment(formatedDate, "YYYY-MM-DD").nextBusinessDay()._d;
   }
 }
 

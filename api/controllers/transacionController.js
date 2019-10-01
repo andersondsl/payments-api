@@ -25,16 +25,16 @@ export const findById = async (ctx, next) => {
 };
 
 export const create = async (ctx, next) => {
-  const { nsu, value, cardBrand, type, createdAt } = ctx.request.body;
+  const { nsu, valor, bandeira, modalidade, horario } = ctx.request.body;
 
   await handleResponse(
     ctx,
     transactionService.createTransaction({
       nsu,
-      value,
-      cardBrand,
-      type,
-      createdAt
+      value: valor,
+      cardBrand: bandeira,
+      type: modalidade,
+      createdAt: horario
     })
   );
 };
