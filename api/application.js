@@ -4,7 +4,7 @@
  * 
  * @module Application
  */
-
+import mongoose from '../infra/database/mongoose'
 import * as http from 'http'
 import Koa from 'koa'
 import cors from '@koa/cors'

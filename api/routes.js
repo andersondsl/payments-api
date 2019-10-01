@@ -6,6 +6,7 @@
  */
 
 'use strict'
+import { index, create, findById } from './controllers';
 
 import Router from 'koa-router';
 const router = new Router();
@@ -14,4 +15,9 @@ router.get('/', (ctx, next) => {
     ctx.body = "Payments Api";
 });
 
+router.post('/transaction', create);
+router.get('/transaction/:device', index);
+router.get('/transaction/:device/:id', findById);
+
 export default router
+ 
