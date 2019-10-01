@@ -5,26 +5,36 @@
  * @module Transaction controller.
  */
 
-'use strict'
+"use strict";
 
-import { transactionService } from '../../domain/transaction/transactionService'
+import { transactionService } from "../../domain/transaction/transactionService";
 
 const handleResponse = async (ctx, callback) => {
-    let { status, data } = await callback    
-    ctx.status = status
-    ctx.body = data ? data : { "error" : "Internal server error" }
-}
+  let { status, data } = await callback;
+  ctx.status = status;
+  ctx.body = data ? data : { error: "Internal server error" };
+};
 
 export const index = async (ctx, next) => {
-    await handleResponse(ctx, transactionService.getAllTransactions())
-}
+  await handleResponse(ctx, transactionService.getAllTransactions());
+};
 
 export const findById = async (ctx, next) => {
-    const { id } = ctx.params;
-    await handleResponse(ctx, transactionService.getTransactionById(id))
-}
+  const { id } = ctx.params;
+  await handleResponse(ctx, transactionService.getTransactionById(id));
+};
 
 export const create = async (ctx, next) => {
-    const { nsu, value, cardBrand, type, createdAt } = ctx.request.body
-    await handleResponse(ctx, transactionService.createTransaction({ nsu, value, cardBrand, type, createdAt }))
-}
+  const { nsu, value, cardBrand, type, createdAt } = ctx.request.body;
+
+  await handleResponse(
+    ctx,
+    transactionService.createTransaction({
+      nsu,
+      value,
+      cardBrand,
+      type,
+      createdAt
+    })
+  );
+};

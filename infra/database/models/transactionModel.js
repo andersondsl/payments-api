@@ -1,36 +1,36 @@
 /**
  * Transaction Schema
  * This file describes the Transaction Model
- * 
+ *
  * @module TransactionSchema
  */
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const TransactionSchema = new mongoose.Schema({
   device_id: {
     type: String,
-    required: true,    
+    required: true
   },
   nsu: {
     type: String,
-    required: true,
+    required: true
   },
   grossValue: {
     type: Number,
-    required: true, 
+    required: true
   },
   netValue: {
     type: Number,
-    required: true, 
+    required: true
   },
   fee: {
     type: Number,
-    required: true, 
+    required: true
   },
   cardBrand: {
     type: String,
-    required: true,
+    required: true
   },
   type: {
     type: String,
@@ -39,12 +39,15 @@ const TransactionSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    required: true,
+    required: true
   },
   availableData: {
     type: Date,
-    required: true,
+    required: true
   }
 });
 
-export const transactionModel = mongoose.model('Transaction', TransactionSchema);
+export const transactionModel = mongoose.model(
+  "Transaction",
+  TransactionSchema
+);

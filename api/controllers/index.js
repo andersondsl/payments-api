@@ -1,3 +1,3 @@
-'use strict'
- 
-export * from './transacionController'
+"use strict";
+
+export * from "./transacionController";
