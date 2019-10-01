@@ -8,7 +8,7 @@
 import mongoose from 'mongoose';
 
 const TransactionSchema = new mongoose.Schema({
-  terminal_id: {
+  device_id: {
     type: String,
     required: true,    
   },
@@ -47,4 +47,4 @@ const TransactionSchema = new mongoose.Schema({
   }
 });
 
-export const TransactionModel = mongoose.model('Transaction', TransactionSchema);
+export const transactionModel = mongoose.model('Transaction', TransactionSchema);
