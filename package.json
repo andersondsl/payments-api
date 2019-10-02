@@ -11,6 +11,7 @@
   "author": "andersondsl andersons.code@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^16.1.4",
     "@koa/cors": "^3.0.0",
     "bristol": "^0.4.0",
     "esm": "^3.2.25",

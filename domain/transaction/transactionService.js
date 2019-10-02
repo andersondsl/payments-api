@@ -7,6 +7,8 @@
 
 import { transactionRepository } from "./transactionRepository";
 const moment = require("moment-business-days");
+const Joi = require("@hapi/joi");
+import { transactionSchemaValidation } from "./transactionSchemaValidation";
 
 class TransactionService {
   constructor() {
@@ -34,6 +36,18 @@ class TransactionService {
 
   async createTransaction({ nsu, value, cardBrand, type, createdAt }) {
     let result = {};
+
+    try {
+      await Joi.assert(
+        { nsu, value, cardBrand, type, createdAt },
+        transactionSchemaValidation
+      );
+    } catch (error) {
+      result.data = error;
+      result.status = 500;
+      return result;
+    }
+
     let fee = this.fees[type.toUpperCase()];
     let netValue = this._calculateFee(value, fee);
     let availableDate = this._getNextWeekDay(createdAt);
