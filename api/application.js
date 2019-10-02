@@ -12,6 +12,7 @@ import bodyParser from "koa-bodyparser";
 import compress from "koa-compress";
 import { logger } from "../infra/logger";
 import router from "./routes";
+import { authenticationMiddleware } from './middlewares/authenticationMiddleware'
 
 /**
  * Creates and returns a new Koa application.
@@ -25,6 +26,7 @@ export async function createServer() {
   app
     .use(compress())
     .use(cors())
+    .use(authenticationMiddleware)
     .use(bodyParser())
     .use(router.routes());
 
