@@ -16,7 +16,7 @@ router.get("/", (ctx, next) => {
 });
 
 router.post("/transaction", create);
-router.get("/transaction/:device", index);
-router.get("/transaction/:device/:id", findById);
+router.get("/transaction/", index);
+router.get("/transaction/:id", findById);
 
 export default router;
