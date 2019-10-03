@@ -46,3 +46,18 @@ export const create = async (ctx, next) => {
   ctx.status = 200;
   ctx.body = result.data;
 };
+
+export const getBalance = async (ctx, next) => {
+  let result = {}
+
+  if (!validateAccess(ctx, "portal", "123456")) {
+    ctx.status = 400;
+    ctx.body = result;
+    return;
+  }
+  let data = { availableData: '2019-09-30T03:00:00.000Z' }
+  result = await transactionService.getBalance(data);
+  console.log(result)
+  ctx.status = 200;
+  ctx.body = result.data;
+}

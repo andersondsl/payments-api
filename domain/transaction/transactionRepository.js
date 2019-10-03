@@ -28,5 +28,10 @@ export const transactionRepository = {
   },
   createTransaction: async data => {
     return handleMongoQuery(Transaction.create(data));
+  },
+  getBalance: async data => {
+    return handleMongoQuery(Transaction.find({ 
+      availableDate: { $eq: data.availableData } 
+    }));
   }
 };

@@ -105,6 +105,13 @@ class TransactionService {
     let formatedDate = date.match(/\d{4}-\d{2}-\d{2}/)[0];
     return moment(formatedDate, "YYYY-MM-DD").nextBusinessDay()._d;
   }
+
+  async getBalance(data) {
+    let result = {};
+    result.data = await this.transactionRepository.getBalance(data);
+    result.status = result.data ? 200 : 500;
+    return result;
+  }
 }
 
 export const transactionService = new TransactionService();
