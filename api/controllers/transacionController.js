@@ -48,16 +48,16 @@ export const create = async (ctx, next) => {
 };
 
 export const getBalance = async (ctx, next) => {
-  let result = {}
-
+  let result = {};
+  let data = ctx.headers.horario;
   if (!validateAccess(ctx, "portal", "123456")) {
     ctx.status = 400;
     ctx.body = result;
     return;
   }
-  let data = { availableData: '2019-09-30T03:00:00.000Z' }
+
   result = await transactionService.getBalance(data);
-  console.log(result)
+  console.log(result);
   ctx.status = 200;
   ctx.body = result.data;
-}
+};
