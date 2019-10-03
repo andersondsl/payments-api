@@ -5,17 +5,17 @@ export const transactionSchemaValidation = Joi.object({
     .alphanum()
     .required(),
 
-  value: Joi.number().positive(),
+  valor: Joi.number().positive(),
 
-  cardBrand: Joi
+  bandeira: Joi
     .string()
     .valid("VISA", "MASTERCARD")
     .required(),
 
-  type: Joi
+  modalidade: Joi
     .string()
     .valid("CREDITO", "DEBITO")
     .required(),
 
-  createdAt: Joi.string()
+  horario: Joi.string()
 });

@@ -20,6 +20,30 @@ class TransactionService {
     };
   }
 
+  async transactionMapper(mapType, data) {
+    if (mapType === "EnToBR") {
+      return {
+        nsu: data.nsu,
+        valor: data.grossValue,
+        liquido: data.netValue,
+        bandeira: data.cardBrand,
+        modalidade: data.type,
+        horario: data.createdAt,
+        disponivel: data.availableDate
+      };
+    }
+
+    if (mapType === "brToEN") {
+      return {
+        nsu: data.nsu,
+        grossValue: data.valor,
+        cardBrand: data.bandeira,
+        type: data.modalidade,
+        createdAt: data.horario
+      };
+    }
+  }
+
   async getAllTransactions() {
     let result = {};
     result.data = await this.transactionRepository.getAllTransactions();
@@ -27,41 +51,46 @@ class TransactionService {
     return result;
   }
 
-  async getTransactionById(id) {
-    let result = {};
-    result.data = await this.transactionRepository.getTransactionById(id);
-    result.status = result.data ? 200 : 500;
-    return result;
-  }
-
-  async createTransaction({ nsu, value, cardBrand, type, createdAt }) {
-    let result = {};
-
+  async joiValidation(data) {
     try {
       await Joi.assert(
-        { nsu, value, cardBrand, type, createdAt },
+        {
+          nsu: data.nsu,
+          valor: data.valor,
+          bandeira: data.bandeira,
+          modalidade: data.modalidade,
+          horario: data.horario
+        },
         transactionSchemaValidation
       );
+      return;
     } catch (error) {
+      return error;
+    }
+  }
+
+  async createTransaction(data) {
+    let result = {};
+
+    let error = await this.joiValidation(data);
+    if (error) {
       result.data = error;
       result.status = 500;
       return result;
     }
 
-    let fee = this.fees[type.toUpperCase()];
-    let netValue = this._calculateFee(value, fee);
-    let availableDate = this._getNextWeekDay(createdAt);
+    let dataMapped = await this.transactionMapper("brToEN", data);
 
-    result.data = await this.transactionRepository.createTransaction({
-      nsu,
-      grossValue: value,
-      netValue,
-      fee,
-      cardBrand,
-      type,
-      createdAt,
-      availableDate
-    });
+    dataMapped.fee = this.fees[dataMapped.type.toUpperCase()];
+    dataMapped.netValue = this._calculateFee(
+      dataMapped.grossValue,
+      dataMapped.fee
+    );
+    dataMapped.availableDate = this._getNextWeekDay(dataMapped.createdAt);
+
+    result.data = await this.transactionRepository.createTransaction(
+      dataMapped
+    );
 
     result.status = result.data ? 200 : 500;
     return result;

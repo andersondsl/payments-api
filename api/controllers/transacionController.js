@@ -32,43 +32,17 @@ export const index = async (ctx, next) => {
   await handleResponse(ctx, transactionService.getAllTransactions());
 };
 
-export const findById = async (ctx, next) => {
-  if (!validateAccess(ctx, "terminal", "123456")) {
-    return;
-  }
-
-  const { id } = ctx.params;
-  await handleResponse(ctx, transactionService.getTransactionById(id));
-};
-
 export const create = async (ctx, next) => {
+  let result = {};
+
   if (!validateAccess(ctx, "terminal", "123456")) {
+    ctx.status = 400;
+    ctx.body = result;
     return;
   }
-
-  const { nsu, valor, bandeira, modalidade, horario } = ctx.request.body;
-
-  let result = await transactionService.createTransaction({
-    nsu,
-    value: valor,
-    cardBrand: bandeira,
-    type: modalidade,
-    createdAt: horario
-  });
-
-  if (!result) {
-    ctx.status = 400;
-    ctx.body = "Not Found";
-  }
+  let data = ctx.request.body;
+  result = await transactionService.createTransaction(data);
 
   ctx.status = 200;
-  ctx.body = {
-    nsu,
-    valor: result.data.grossValue,
-    liquido: result.data.netValue,
-    bandeira: result.data.cardBrand,
-    modalidade: result.data.type,
-    horario: result.data.createdAt,
-    disponivel: result.data.availableDate
-  };
+  ctx.body = result.data;
 };

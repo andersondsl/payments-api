@@ -6,7 +6,7 @@
  */
 
 "use strict";
-import { index, create, findById } from "./controllers";
+import { index, create } from "./controllers";
 
 import Router from "koa-router";
 const router = new Router();
@@ -16,7 +16,6 @@ router.get("/", (ctx, next) => {
 });
 
 router.post("/transaction", create);
-router.get("/transaction/", index);
-router.get("/transaction/:id", findById);
+router.get("/transaction", index);
 
 export default router;
