@@ -19,3 +19,21 @@ export const transactionSchemaValidation = Joi.object({
 
   horario: Joi.string()
 });
+
+export const validateTransaction = async (data) => {
+  try {
+    await Joi.assert(
+      {
+        nsu: data.nsu,
+        valor: data.valor,
+        bandeira: data.bandeira,
+        modalidade: data.modalidade,
+        horario: data.horario
+      },
+      transactionSchemaValidation
+    );
+    return;
+  } catch (error) {
+    return error;
+  }
+}

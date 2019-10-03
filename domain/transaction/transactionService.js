@@ -8,7 +8,7 @@
 import { transactionRepository } from "./transactionRepository";
 const moment = require("moment-business-days");
 const Joi = require("@hapi/joi");
-import { transactionSchemaValidation } from "./transactionSchemaValidation";
+import { validateTransaction } from "./transactionSchemaValidation";
 
 class TransactionService {
   constructor() {
@@ -51,28 +51,10 @@ class TransactionService {
     return result;
   }
 
-  async joiValidation(data) {
-    try {
-      await Joi.assert(
-        {
-          nsu: data.nsu,
-          valor: data.valor,
-          bandeira: data.bandeira,
-          modalidade: data.modalidade,
-          horario: data.horario
-        },
-        transactionSchemaValidation
-      );
-      return;
-    } catch (error) {
-      return error;
-    }
-  }
-
   async createTransaction(data) {
     let result = {};
 
-    let error = await this.joiValidation(data);
+    let error = await validateTransaction();
     if (error) {
       result.data = error;
       result.status = 500;
