@@ -66,7 +66,7 @@ class TransactionService {
     let result = {};
 
     // validate transaction schema
-    let error = await validateTransaction();
+    let error = await validateTransaction(data);
     if (error) {
       result.data = error;
       result.status = 500;
