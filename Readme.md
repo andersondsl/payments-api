@@ -99,6 +99,9 @@ user: terminal and password 123456
 
   http://localhost:3000/status
 
+  Loading tests can be done with the Artullery package
+  ```npm install -g artillery```
+  ``` artillery quick --count 100 -n 20 http://localhost:3000/transaction ```
 
 ## Contributing and feedback
 Please feel free to create issues in case of doubts or send a email at andersons.code@gmail.com
