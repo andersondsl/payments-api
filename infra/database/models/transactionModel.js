@@ -38,7 +38,7 @@ const TransactionSchema = new mongoose.Schema({
     required: true
   },
   availableDate: {
-    type: Date,
+    type: String,
     required: true
   }
 });

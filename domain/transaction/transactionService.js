@@ -8,23 +8,18 @@
 import { transactionRepository } from "./transactionRepository";
 const moment = require("moment-business-days");
 import { validateTransaction } from "./transactionSchemaValidation";
-
-class TransactionService {
-  constructor() {
-    this.transactionRepository = transactionRepository;
-
-    this.fees = {
-      DEBITO: 2,
-      CREDITO: 3
-    };
-  }
   
+const fees = {
+  DEBITO: 2,
+      CREDITO: 3
+}
+
   /**
    * Translate data between specific languages
    * @param {string} mapType - type of localization "EnToBR" or "brToEN"
    * @param {Object} data - A positive or negative number.
    */
-  async transactionMapper(mapType, data) {
+  const transactionMapper = async (mapType, data) => {
     if (mapType === "EnToBR") {
       return {
         nsu: data.nsu,
@@ -51,18 +46,22 @@ class TransactionService {
   /**
    * Get all transaction on transaction collection
    */
-  async getAllTransactions() {
+  const getAllTransactions = async () => {
     let result = {};
-    result.data = await this.transactionRepository.getAllTransactions();
+    result.data = await transactionRepository.getAllTransactions();
     result.status = result.data ? 200 : 500;
     return result;
   }
 
   /**
    * Create a transaction with a payload
-   * @param {} data - create transaction payload
+   * @param {} data - create transaction payl
+   * const fees = {
+  }
+   * }
+   * oad
    */
-  async createTransaction(data) {
+  const createTransaction = async(data) => {
     let result = {};
 
     // validate transaction schema
@@ -74,20 +73,21 @@ class TransactionService {
     }
     
     // translate payload data to database schema
-    let dataMapped = await this.transactionMapper("brToEN", data);
+    let dataMapped = await transactionMapper("brToEN", data);
     
     // add calculated properties to dataMapped
-    dataMapped.fee = this.fees[dataMapped.type.toUpperCase()];
+    dataMapped.fee = fees[dataMapped.type.toUpperCase()];
     
     // calculate fee based on type of transaction
-    dataMapped.netValue = this._calculateFee(
+    dataMapped.netValue = _calculateFee(
       dataMapped.grossValue,
       dataMapped.fee
     );
-    dataMapped.availableDate = this._getNextWeekDay(dataMapped.createdAt);
-    
+
+    dataMapped.availableDate = _getNextWeekDay(dataMapped.createdAt).replace(/[-]/g, "");
+
     // add calculated properties to dataMapped
-    result.data = await this.transactionRepository.createTransaction(
+    result.data = await transactionRepository.createTransaction(
       dataMapped
     );
 
@@ -101,7 +101,7 @@ class TransactionService {
    * @param {Number} value - gorss value from transaction
    * @param {Number} fee - Fee based on type of transaction
    */
-  _calculateFee(value, fee) {
+  const _calculateFee = (value, fee) => {
     let feeValue = (value / 100) * fee;
     return value - feeValue;
   }
@@ -110,21 +110,24 @@ class TransactionService {
    * get the next weekday, using a moment plugin
    * @param {string} date - the date of transaction 
    */
-  _getNextWeekDay(date) {
+  const _getNextWeekDay = (date) => {
     let formatedDate = date.match(/\d{4}-\d{2}-\d{2}/)[0];
-    return moment(formatedDate, "YYYY-MM-DD").nextBusinessDay()._d;
+    return moment(formatedDate, "YYYY-MM-DD").nextBusinessDay()._i;
   }
 
   /**
    * Return the balance of available transactions from a specific day
    * @param {string} date - the date of the requested balance
    */
-  async getBalance(data) {
+  const getBalance = async (data) => {
     let result = {};
-    result.data = await this.transactionRepository.getBalance(data);
+    result.data = await transactionRepository.getBalance(data);
     result.status = result.data ? 200 : 500;
     return result;
   }
-}
 
-export const transactionService = new TransactionService();
+export const transactionService = {
+  getAllTransactions: getAllTransactions,
+  getBalance: getBalance,
+  createTransaction: createTransaction
+}

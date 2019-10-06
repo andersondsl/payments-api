@@ -49,15 +49,30 @@ export const create = async (ctx, next) => {
 
 export const getBalance = async (ctx, next) => {
   let result = {};
-  let data = ctx.headers.horario;
+  let dataconsulta = ctx.headers.dataconsulta;
+
+  if (!dataconsulta) {
+    ctx.status = 400;
+    ctx.body =
+      "You need to pass a header paratemer like: 'dataconsulta: 2019-10-05'";
+    return;
+  }
+
   if (!validateAccess(ctx, "portal", "123456")) {
     ctx.status = 400;
     ctx.body = result;
     return;
   }
 
-  result = await transactionService.getBalance(data);
-  console.log(result);
+  result = await transactionService.getBalance(dataconsulta.replace(/[-]/g, ""));
+
+  let totalValue = result.data.reduce((total, value) => {
+    return total + Number(value.netValue);
+  }, 0);
+
   ctx.status = 200;
-  ctx.body = result.data;
+  ctx.body = {
+    disponivel: `Disponível em ${ new Date(dataconsulta).toUTCString() }`,
+    receber: totalValue
+  };
 };

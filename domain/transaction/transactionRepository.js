@@ -30,10 +30,10 @@ export const transactionRepository = {
     return handleMongoQuery(Transaction.create(data));
   },
   getBalance: async data => {
-    return handleMongoQuery(
-      Transaction.find({
-        availableDate: { $eq: data }
+      return await Transaction.find({
+        availableDate: {
+          $lte: data
+        }
       })
-    );
   }
 };
