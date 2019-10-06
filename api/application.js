@@ -14,6 +14,7 @@ import { logger } from "../infra/logger";
 import router from "./routes";
 import { authenticationMiddleware } from './middlewares/authenticationMiddleware'
 import { requestLogger } from './middlewares/logMiddleware';
+const monitor = require('koa-monitor')
 
 /**
  * Creates and returns a new Koa application.
@@ -23,6 +24,9 @@ import { requestLogger } from './middlewares/logMiddleware';
 export async function createServer() {
   logger.debug("Creating server...", { scope: "startup" });
   const app = new Koa();
+  const server = http.createServer(app.callback());
+
+  app.use(monitor(server, { path: '/status', statusHtmlPage: 'index.html' }))
 
   app
     .use(compress())
@@ -31,8 +35,6 @@ export async function createServer() {
     .use(authenticationMiddleware)
     .use(bodyParser())
     .use(router.routes());
-
-  const server = http.createServer(app.callback());
 
   server.on("close", () => {
     mongoose.connection.close();
