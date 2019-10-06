@@ -20,11 +20,11 @@ This is a nodejs application, build up with koajs, mongo.
 
 # Features
 
-## Create a transaction, and body and
+## Create a transaction, and body
 
 user: terminal and password 123456
 
-```
+```bash
   curl -X POST \
     http://localhost:3000/transaction \
     -H 'Authorization: Basic dGVybWluYWw6MTIzNDU2' \
@@ -43,7 +43,7 @@ user: terminal and password 123456
 
 user: portal and password 123456
 
-```
+```bash
   curl -X GET \
     http://localhost:3000/transaction \
     -H 'Authorization: Basic cG9ydGFsOjEyMzQ1Ng==' \
@@ -54,7 +54,7 @@ user: portal and password 123456
 ## Get the balance of transactions available based on _dataconsulta_ parameter
 user: terminal and password 123456
 
-```
+```bash
   curl -X GET \
     http://localhost:3000/balance \
     -H 'Authorization: Basic cG9ydGFsOjEyMzQ1Ng==' \
