@@ -84,6 +84,12 @@ const fees = {
       dataMapped.fee
     );
 
+    let availableDate = new Date(dataMapped.createdAt);
+
+    if (dataMapped.type === 'CREDITO'){
+      availableDate.setDate(availableDate.getDate() + 30);
+    }
+
     dataMapped.availableDate = _getNextWeekDay(dataMapped.createdAt).replace(/[-]/g, "");
 
     // add calculated properties to dataMapped
