@@ -1,0 +1,85 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Payments API",
+    "description": "API to manage payments transactions",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/transaction": {
+      "get": {
+        "summary": "Returns a list of transactions on a mongodb collection ",
+        "description": "Return all transctions",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new transaction",
+        "description": "Creates a new transaction on transactions collection on mongoDb",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Dados da transação",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction created"
+          }
+        }
+      }
+    },
+    "/balance": {
+      "get": {
+        "summary": "Returns the balance of all transactions avaulable on a specific date",
+        "description": "Balance of all transctions",
+        "schema": {
+          "Basic Authorization": "integer"
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "dataconsulta",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
