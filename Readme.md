@@ -15,13 +15,8 @@ This is a nodejs application, build up with koajs, mongo.
 ## Quick start
 
 1. Clone the repository with `git clone --depth=1 https://github.com/andersondsl/payments-api`
-2. Run `docker-compose up`, to spin up mongo container and a workspace for development
-3. The server will be available at `http://localhost:3000/`.
-
-## Docs
-1. To view Swagger docs, `cd ./swagger && docker-compose up` 
-2. The server will be available at `http://localhost:8082/`.
-
+2. Run `make build`, to spin up the containers, and `make down` to stop them.
+3. The server will be available at `http://localhost:3000/` and swagger docs at `http://localhost:8082/`
 
 ## Routes
  All routes pass by the Authenctication Middlware, you always need to pass a basic authentication token
