@@ -35,6 +35,7 @@ export async function createServer() {
   const server = http.createServer(app.callback());
 
   server.on("close", () => {
+    mongoose.connection.close();
     logger.debug("Server closing, bye!", { scope: "closing" });
   });
 
