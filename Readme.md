@@ -77,12 +77,22 @@ user: terminal and password 123456
     -H 'dataconsulta: 2019-10-07'
 ```
 
-## Folder strcuture
+## Architecture
+  This archteture aims to be easily manteined and developed.\
+  Each folder and each file has his responsability declouped oud from each other.
 
-    Based on domain drive design, we have that folders.
-        - app - Here we have all the controllers and configurations of the koa server.
-        - domain - Here we have all the services and repositories, with the business rules of the application.
-        - infra - Connections with database, and general configs.
+  ````bash
+    .
+    ├── api - Here we have all related to koajs server.
+    │   ├── controllers
+    │   └── middlewares
+    ├── domain - Here we have all business rules of transactions
+    │   └── transaction
+    ├── infra - Here we have all config files and database stuff
+    │   └── database
+    │       └── models
+    └── swagger - Here we have all related to swagger docs
+  ````
 
 ## Feedback
 
