@@ -16,7 +16,22 @@ This is a nodejs application, build up with koajs, mongo.
 
 1. Clone the repository with `git clone --depth=1 https://github.com/andersondsl/payments-api`
 2. Run `make build`, to spin up the containers, and `make down` to stop them.
-3. The server will be available at `http://localhost:3000/` and swagger docs at `http://localhost:8082/`
+
+You should see a log like this: 
+````bash
+  ❯ make build                                                                                                   
+  docker-compose -f ./swagger/docker-compose.yaml up -d && docker-compose up -d && docker-compose ps
+  Creating network "swagger_default" with the default driver
+  Creating swagger-ui ... done
+  Creating network "payments-api_custom_network" with the default driver
+  Creating payments-api_mongo_1 ... done
+  Creating payments-api_app_1   ... done
+          Name                      Command               State            Ports
+  ----------------------------------------------------------------------------------------
+  payments-api_app_1     bash -c npm install && npm ...   Up      0.0.0.0:3000->3000/tcp
+  payments-api_mongo_1   docker-entrypoint.sh mongod      Up      0.0.0.0:27017->27017/tcp
+
+````
 
 # Features
 
