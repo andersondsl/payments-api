@@ -31,7 +31,8 @@ export async function createServer() {
   app
     .use(compress())
     .use(cors())
-    .use(requestLogger)
+    //  Using this logger, seen to make a high call of the console api, increasing memory usage and response time. 
+    // .use(requestLogger)
     .use(authenticationMiddleware)
     .use(bodyParser())
     .use(router.routes());

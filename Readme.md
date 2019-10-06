@@ -94,6 +94,11 @@ user: terminal and password 123456
     └── swagger - Here we have all related to swagger docs
   ````
 
-## Feedback
+## Monitoring and Loading Tests
+  You can check a basic monitoring tool called, koa-monitor, where you can check memory usage and response time.
 
+  http://localhost:3000/status
+
+
+## Contributing and feedback
 Please feel free to create issues in case of doubts or send a email at andersons.code@gmail.com
