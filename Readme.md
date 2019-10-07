@@ -37,7 +37,7 @@ Run `docker-compose logs -f app` to see logs and know if the server started.
 
 # Features
 
-## Create a transaction, and body
+## Create a transaction
 
 user: terminal and password 123456
 
@@ -81,7 +81,7 @@ user: terminal and password 123456
 
 ## Architecture
   This archteture aims to be easily manteined and developed.\
-  Each folder and each file has his responsability declouped oud from each other.
+  Each folder and each file has his responsability declouped out from each other.
 
   ````bash
     .
@@ -97,11 +97,11 @@ user: terminal and password 123456
   ````
 
 ## Monitoring and Loading Tests
-  You can check a basic monitoring tool called, koa-monitor, where you can check memory usage and response time.
+  You can check a basic monitoring tool called Koa-monitor, where you can check memory usage and response time.
 
   http://localhost:3000/status
 
-  Loading tests can be done with the Artullery package\
+  Loading tests can be done with the Artillery package\
   ``` npm install -g artillery``` \
   ``` artillery quick --count 100 -n 20 http://localhost:3000/transaction ```
 
