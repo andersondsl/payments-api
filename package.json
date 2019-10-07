@@ -25,6 +25,7 @@
     "mongoose": "^5.7.3",
     "nodemon": "^1.19.3",
     "palin": "^2.3.0",
+    "redis": "^2.8.0",
     "yenv": "^2.1.0"
   },
   "devDependencies": {

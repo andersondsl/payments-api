@@ -5,6 +5,8 @@
  * @module Application
  */
 import mongoose from "../infra/database/mongoose";
+import { redisClient } from "../infra/redis/redis";
+
 import * as http from "http";
 import Koa from "koa";
 import cors from "@koa/cors";
@@ -12,9 +14,9 @@ import bodyParser from "koa-bodyparser";
 import compress from "koa-compress";
 import { logger } from "../infra/logger";
 import router from "./routes";
-import { authenticationMiddleware } from './middlewares/authenticationMiddleware'
-import { requestLogger } from './middlewares/logMiddleware';
-const monitor = require('koa-monitor')
+import { authenticationMiddleware } from "./middlewares/authenticationMiddleware";
+//import { requestLogger } from "./middlewares/logMiddleware";
+const monitor = require("koa-monitor");
 
 /**
  * Creates and returns a new Koa application.
@@ -26,12 +28,12 @@ export async function createServer() {
   const app = new Koa();
   const server = http.createServer(app.callback());
 
-  app.use(monitor(server, { path: '/status', statusHtmlPage: 'index.html' }))
+  app.use(monitor(server, { path: "/status", statusHtmlPage: "index.html" }));
 
   app
     .use(compress())
     .use(cors())
-    //  Using this logger, seen to make a high call of the console api, increasing memory usage and response time. 
+    //  Using this logger, seen to make a high call of the console api, increasing memory usage and response time.
     // .use(requestLogger)
     .use(authenticationMiddleware)
     .use(bodyParser())

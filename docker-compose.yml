@@ -1,6 +1,13 @@
 version: '3.6'
 
 services:
+  redis:
+    image: redis
+    command: redis-server --requirepass Redis2019!
+    ports:
+      - "6379:6379"
+    networks:
+      - custom_network
   mongo:
     image: mongo:4.2.0
     volumes:
@@ -22,6 +29,7 @@ services:
       - "3000:3000"
     depends_on:
       - mongo
+      - redis
     networks:
       - custom_network
 

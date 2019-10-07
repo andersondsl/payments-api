@@ -33,6 +33,8 @@ You should see a log like this:
 
 ````
 
+Run `docker-compose logs -f app` to see logs and know if the server started.
+
 # Features
 
 ## Create a transaction, and body
@@ -99,8 +101,8 @@ user: terminal and password 123456
 
   http://localhost:3000/status
 
-  Loading tests can be done with the Artullery package
-  ```npm install -g artillery```
+  Loading tests can be done with the Artullery package\
+  ``` npm install -g artillery``` \
   ``` artillery quick --count 100 -n 20 http://localhost:3000/transaction ```
 
 ## Contributing and feedback
